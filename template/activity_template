@@ -1,0 +1,16 @@
+public class >>>module_name<<<Activity extends FragmentActivity implements I>>>module_name<<<ActivityView{
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Activity>>>module_name<<<Binding binding = DataBindingUtil.setContentView(this,R.layout.activity_>>>layout_name<<<);
+        binding.setViewmodel(new >>>module_name<<<ActivityViewModel(this));
+        initFragments();
+    }
+
+    private void initFragments() {
+        >>>module_name<<<Fragment >>>var_name<<<Fragment = >>>module_name<<<Fragment.newInstance();
+        >>>var_name<<<Fragment.setViewModel(new >>>module_name<<<ViewModel());
+        ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),R.id.>>>layout_name<<<_framelayout,>>>var_name<<<Fragment);
+    }
+}

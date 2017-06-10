@@ -1,0 +1,28 @@
+public class >>>module_name<<<Fragment extends Fragment implements I>>>module_name<<<FragmentView{
+private >>>module_name<<<ViewModel viewModel;
+    public >>>module_name<<<Fragment() {
+        // Required empty public constructor
+    }
+
+    public static Fragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        >>>module_name<<<Fragment fragment = new >>>module_name<<<Fragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        Fragment>>>module_name<<<Binding binding = Fragment>>>module_name<<<Binding.inflate(inflater,container,false);
+        binding.setViewmodel(viewModel);
+        return binding.getRoot();
+    }
+
+    public void setViewModel(>>>module_name<<<ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+}
