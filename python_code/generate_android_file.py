@@ -1,7 +1,8 @@
 # coding=utf-8
 import generate_tools
+import os
 
-input_name = "test_andv2"
+input_name = "ifly_test"
 mod_array = input_name.split("_")
 # 获得模块名称，如＂TestAnd＂
 module_name = '%s%s%s%s' % (mod_array[0][:1].upper(), mod_array[0][1:], mod_array[1][:1].upper(), mod_array[1][1:])
@@ -48,6 +49,7 @@ def make_flodders():
 # file_type_name:生成文件的后缀名和文件类型如：Fragment.java
 def make_android_files(views_path_name, template_name, module_replace_name_dic, file_type_name):
     print '创建android文件'
+    os.system('pwd')
     generate_tools.make_outputfile(generate_tools.replace_keywords(
         generate_tools.read_template(template_name),
         module_replace_name_dic),
@@ -97,6 +99,8 @@ def make_muti_android_files():
                            'current_time': generate_tools.get_current_time()
                        },
                        '%s%s%s' % ('I', module_name, 'FragmentView.java'))
+#     创建viewmodel文件
+#     make_android_files(viewmodels_path)
 
 
 # 创建文件夹

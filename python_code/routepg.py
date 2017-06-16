@@ -10,16 +10,21 @@ def hellopage(username):
     return 'Hello %s!' % username
 
 
-@app.route('/index/<loginname>')
-def index(loginname):
+@app.route('/indexserver/<deftwoname>')
+def index(deftwoname):
     # print os.system('pwd')
-    return render_template('test.html', name=loginname)
+    return render_template('index.html', var_one_value='hello', var_two_value=deftwoname)
 
 
 @app.route('/showUserName/<showname>')
 def show_user_name(showname):
-    return showname
+    index(' world')
+
+
+@app.route('/search_table')
+def search_table():
+    return index('world')
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(port=8080)

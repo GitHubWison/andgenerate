@@ -5,11 +5,11 @@ import time
 # 替代模板中的字符串
 replace_start_str = '>>>'
 replace_end_str = '<<<'
-template_path = 'template'
+template_path = '../template'
 seplator = '/'
 # 模板文件格式
 template_formate = ''
-output_path = 'output'
+output_path = '../output'
 
 
 # 将模板中需要替换的内容替换成ｄｉｃ中的内容
