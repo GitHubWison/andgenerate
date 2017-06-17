@@ -99,8 +99,18 @@ def make_muti_android_files():
                            'current_time': generate_tools.get_current_time()
                        },
                        '%s%s%s' % ('I', module_name, 'FragmentView.java'))
-#     创建viewmodel文件
-#     make_android_files(viewmodels_path)
+    #     创建viewmodel for activity文件
+    make_android_files(viewmodels_path,
+                       'activity_viewmodel_template',
+                       {'module_name': module_name},
+                       '%s%s' % (module_name, 'ActivityViewModel.java')
+                       )
+    #     创建viewmodel for fragment 文件
+    make_android_files(viewmodels_path,
+                       'fragment_viewmodel_template',
+                       {'module_name': module_name},
+                       '%s%s' % (module_name, 'ViewModel.java')
+                       )
 
 
 # 创建文件夹
