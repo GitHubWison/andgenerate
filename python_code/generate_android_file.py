@@ -2,7 +2,7 @@
 import generate_tools
 import os
 
-input_name = "ifly_test"
+input_name = "referral_handover"
 mod_array = input_name.split("_")
 # 获得模块名称，如＂TestAnd＂
 module_name = '%s%s%s%s' % (mod_array[0][:1].upper(), mod_array[0][1:], mod_array[1][:1].upper(), mod_array[1][1:])
