@@ -4,12 +4,18 @@ import datetime
 import sys
 import xlwt
 
+user_name = '徐麒威'
+mission_catagory = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+before_days = -10
+svn_remote_path = 'https://svn.mdsd.cn:7443/svn/PreHospitalEmergency/trunk/AndroidApp/WisdomAidApp/trunk/WisdomAidApp'
+svn_user_name = 'CP-xuqiwei'
+
 time_format = '%Y-%m-%d'
 start_time_key = 'start_time'
 end_time_key = 'end_time'
 wb = xlwt.Workbook(encoding='utf-8')
 
-ws = wb.add_sheet('test_sheet')
+ws = wb.add_sheet(user_name)
 basic_unit = 20
 
 borders_test = xlwt.Borders()
@@ -18,20 +24,10 @@ borders_test.right = 1
 borders_test.bottom = 1
 borders_test.top = 1
 
-mission_catagory = ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
-before_days = -10
-
 end_time = datetime.datetime.now() + datetime.timedelta(days=1)
 start_time = end_time + datetime.timedelta(days=before_days)
 
 
-# style = xlwt.XFStyle()
-# font = xlwt.Font()
-# font.name = 'SimSun'
-# style.font = font
-
-# svn_remote_path:远程svn路径
-# svn_username:svn用户名
 def export_svn_log(svn_remote_path, svn_username):
     # 切换到本地svn路径去
     # os.chdir(svn_local_path)
@@ -124,7 +120,11 @@ def build_excel(list):
     ws.write(index, 0, '1', style_next_week_content)
     ws.write_merge(index, index, 1, 5, '', style_next_week_content)
     ws.write(index, 6, '', style_next_week_content)
-    wb.save('output/test.xls')
+    end_time = datetime.datetime.now() + datetime.timedelta()
+
+    weekly_name = 'output/%s周工作总结＆周任务跟踪-[%s].xls' % (end_time.strftime('%Y%m%d'), user_name)
+
+    wb.save(weekly_name)
 
 
 def init_excel():
@@ -213,8 +213,6 @@ def get_date_range(start_time, end_time):
 
 # export_svn_log('https://svn.mdsd.cn:7443/svn/PreHospitalEmergency/trunk/AndroidApp/WisdomAidApp/trunk/WisdomAidApp',
 #                'CP-xuqiwei')
-export_svn_log('https://svn.mdsd.cn:7443/svn/PreHospitalEmergency/trunk/高危筛查/Src',
-               'CP-zhouqing')
+export_svn_log(svn_remote_path, svn_user_name)
 # export_svn_log('https://svn.mdsd.cn:7443/svn/PreHospitalEmergency/trunk',
 #                'CP-xuqiwei')
-
