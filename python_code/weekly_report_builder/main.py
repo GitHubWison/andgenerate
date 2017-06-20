@@ -10,6 +10,15 @@ end_time_key = 'end_time'
 wb = xlwt.Workbook(encoding='utf-8')
 
 ws = wb.add_sheet('test_sheet')
+basic_unit = 20
+
+borders_test = xlwt.Borders()
+borders_test.left = 1
+borders_test.right = 1
+borders_test.bottom = 1
+borders_test.top = 1
+
+mission_catagory = ['星期一', '星期二', '星期三', '星期四', '星期五']
 
 
 # style = xlwt.XFStyle()
@@ -17,17 +26,20 @@ ws = wb.add_sheet('test_sheet')
 # font.name = 'SimSun'
 # style.font = font
 
-# path:本地svn路径
-def export_svn_log(svn_local_path):
+# svn_remote_path:远程svn路径
+# svn_username:svn用户名
+def export_svn_log(svn_remote_path, svn_username):
     # 切换到本地svn路径去
-    os.chdir(svn_local_path)
-    print os.getcwd()
-    end_time = datetime.datetime.now()+datetime.timedelta(days=1)
-    start_time = end_time + datetime.timedelta(days=-5)
+    # os.chdir(svn_local_path)
+    # print os.getcwd()
+    end_time = datetime.datetime.now() + datetime.timedelta(days=1)
+    start_time = end_time + datetime.timedelta(days=-10)
     start_end_time = get_date_range(start_time, end_time)
     print '%s:%s' % ('开始时间', start_end_time[start_time_key])
     print '%s:%s' % ('结束时间', start_end_time[end_time_key])
-    svn_check_log_str = 'svn log -r {%s}:{%s}' % (start_end_time[start_time_key], start_end_time[end_time_key])
+    svn_check_log_str = 'svn log -r {%s}:{%s} --search %s %s' % (start_end_time[start_time_key],
+                                                                 start_end_time[end_time_key], svn_username,
+                                                                 svn_remote_path)
     print svn_check_log_str
     fp = os.popen(svn_check_log_str, 'r')
     svn_log = fp.read()
@@ -38,9 +50,80 @@ def export_svn_log(svn_local_path):
 
 
 def build_excel(list):
-    for index, item in enumerate(list):
-        ws.write(index, 0, item)
+    # 初始化表格
+    init_excel()
+    missions_dic = div_missions(list)
+    index = 0
+    flag_start_index = 2
+    for total_index, total_item in enumerate(mission_catagory):
+        # 每天的任务列表
+        everyday_mission_list = missions_dic[total_item]
+
+        # 每天的任务个数
+        everyday_mission_len = len(everyday_mission_list)
+        flag_end_index = flag_start_index + everyday_mission_len-1
+        # 合并纵向的单元格
+        print '%s===%s===%s' % (flag_start_index, flag_end_index, total_item)
+        ws.write_merge(flag_start_index, flag_end_index, 1, 1, total_item)
+        flag_start_index = flag_end_index+1
+        for item in everyday_mission_list:
+            # for index, item in enumerate(list):
+            ws.row(index + 2).height = 400
+
+            style_test3 = xlwt.easyxf('font:height 220,name Microsoft YaHei,color_index black,'
+                                      'bold off,italic off;align:wrap on,vert center,horiz center;')  # 填写id
+            style_test3.borders = borders_test
+            ws.write(index + 2, 0, index + 1, style_test3)
+
+            style_test2 = xlwt.easyxf('font:height 220,name SimSun,color_index black,'
+                                      'bold off,italic off;align:wrap on,vert center,horiz center;')  # 填写类型
+            style_test2.borders = borders_test
+            ws.write(index + 2, 2, '新产品研发', style_test2)
+
+            style_test1 = xlwt.easyxf('font:height 220,name Microsoft YaHei,color_index black,'
+                                      'bold off,italic off;align:wrap on,vert center,horiz left;')  # 填写任务名称
+            style_test1.borders = borders_test
+            ws.write(index + 2, 3, item, style_test1)
+
+            style_test = xlwt.easyxf('font:height 220,name Microsoft YaHei,color_index brown,'
+                                     'bold on,italic off;align:wrap on,vert center,horiz center;'
+                                     'pattern: pattern solid,fore_colour light_green;')
+            style_test.borders = borders_test
+            #     填写完成状况
+            ws.write(index + 2, 5, '100%', style_test)
+
+            index += 1
     wb.save('output/test.xls')
+
+
+def init_excel():
+    end_time = datetime.datetime.now() + datetime.timedelta(days=1)
+    start_time = end_time + datetime.timedelta(days=-10)
+    start_end_time = get_date_range(start_time, end_time)
+    ws.row(0).height = 800
+    title_name = '个人工作任务跟踪表(%s至%s)' % (start_end_time[start_time_key], start_end_time[end_time_key])
+    ws.write_merge(0, 0, 0, 6, title_name,
+                   xlwt.easyxf('font:height 360,name Microsoft YaHei,color_index black,'
+                               'bold on,italic off;align:wrap on,vert center,horiz center;'
+                               'pattern: pattern solid,fore_colour light_orange'))
+    ws.row(1).height = 915
+    ws.col(0).width = 1500
+    ws.col(3).width = 20000
+    capture_style = ('font:height 220,name Microsoft YaHei,color_index black,'
+                     'bold on,italic off;align:wrap on,vert center,horiz center;'
+                     'pattern: pattern solid,fore_colour pale_blue')
+    ws.write(1, 0, 'ID', xlwt.easyxf(capture_style))
+    ws.write(1, 1, '时间', xlwt.easyxf(capture_style))
+    ws.write(1, 2, '类型', xlwt.easyxf(capture_style))
+    ws.write(1, 3, '任务名称', xlwt.easyxf(capture_style))
+    ws.write(1, 4, '实际工时', xlwt.easyxf(capture_style))
+    ws.write(1, 5, '完成状态', xlwt.easyxf(capture_style))
+    ws.write(1, 6, '备注', xlwt.easyxf(capture_style))
+    # wb.save('output/col.xls')
+
+    # ws.write_merge(2, 2, 1, 1, "23")
+
+    # ws.write_merge(3, 3, 1, 1, "34")
 
 
 # 提取log中的信息
@@ -66,6 +149,31 @@ def get_log():
     return log_list
 
 
+# 拆分任务
+# mission_catagory:任务区分
+def div_missions(mission_list):
+    # 分类列表的长度
+    catagory_len = len(mission_catagory)
+    # 任务列表的长度
+    mission_list_len = len(mission_list)
+    # 每个分类下的任务个数
+    each_catagory_len = mission_list_len / catagory_len
+    # 余下的任务个数
+    remain_missions = mission_list_len % catagory_len
+    # 整合后的missionlist
+    result_missiondic = {}
+    each_start_list_index = 0
+    # each_end_list_index = 0
+    for index, item in enumerate(mission_catagory):
+        each_end_list_index = each_start_list_index + each_catagory_len
+        if remain_missions != 0:
+            each_end_list_index += 1
+            remain_missions -= 1
+        result_missiondic[mission_catagory[index]] = mission_list[each_start_list_index:each_end_list_index]
+        each_start_list_index = each_end_list_index
+    return result_missiondic
+
+
 # 获得日期范围
 # start_time:开始时间
 # end_time:结束时间
@@ -75,6 +183,9 @@ def get_date_range(start_time, end_time):
     return {start_time_key: formated_start_t, end_time_key: formated_end_t}
 
 
-export_svn_log('/home/xuqiwei/documents/android/project/svn/WisdomAidApp/trunk/WisdomAidApp')
+export_svn_log('https://svn.mdsd.cn:7443/svn/PreHospitalEmergency/trunk/AndroidApp/WisdomAidApp/trunk/WisdomAidApp',
+               'CP-xuqiwei')
 # build_excel()
 # get_log()
+# init_excel()
+# div_missions(['11111', '22222', '33333', '44444', '555555', '66666', '7777777'])
