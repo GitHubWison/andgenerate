@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发起请求</title>
+</head>
+<body>
+    <form action="/requesturl_result" method="post">
+        <input type="text" name="url" value="{{urlpath}}" style="width: 100%;height: 50%"/>&nbsp;
+        <label><input name="method" type="radio" value="POST"/>post请求</label>
+        <label><input name="method" type="radio" value="GET" checked="checked"/>get请求</label>&nbsp;
+        <textarea rows="20" name="params" style="width: 100%">{{params}}</textarea>
+        <input type="submit" name="sub"/>
+    </form>
+</body>
+</html>

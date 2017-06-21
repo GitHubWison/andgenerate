@@ -5,12 +5,13 @@
     <title>首页</title>
 </head>
 <body>
+
 <table>
 
     <tr>
         <td>
 
-            <a href="{{url_for('search_table')}}" >
+            <a href="{{url_for('search_table')}}">
                 查询数据库
             </a>
         </td>
@@ -21,15 +22,18 @@
 
     <tr>
         <td>
-            <a href="{{url_for('generate_android_file')}}">
+            <a href="">
                 创建安卓文件
             </a>
         </td>
-        <td>
-            <input type="text" name="var_one" value=""/>
-        </td>
     </tr>
-</table>
-<input type="text" name="var_two" value="{{var_two_value}}">
+
+ <tr>
+        <td>
+            <a href="{{url_for('requesturl_noparam')}}">
+                调用api
+            </a>
+        </td>
+    </tr></table>
 </body>
 </html>

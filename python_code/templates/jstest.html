@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/jstest" onsubmit="return print_result()" method="post">
+    <input type="text" name="inputname"/>
+    <input type="submit" name="sub"/>
+</form>
+<script>
+    function print_result() {
+        $.ajax({
+           success:function (data) {
+               console.log(data.inputname)
+           }
+        });
+        return false
+    }
+</script>
+</body>
+</html>
