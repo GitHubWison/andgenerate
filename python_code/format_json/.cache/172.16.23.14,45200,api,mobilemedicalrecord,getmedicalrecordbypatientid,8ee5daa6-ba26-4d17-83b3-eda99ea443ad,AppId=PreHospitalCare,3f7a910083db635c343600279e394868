@@ -1,0 +1,16 @@
+status: 200
+content-length: 1221
+x-xss-protection: 1;mode=block
+content-location: http://172.16.23.14:45200/api/mobilemedicalrecord/getmedicalrecordbypatientid/8ee5daa6-ba26-4d17-83b3-eda99ea443ad?AppId=PreHospitalCare
+x-content-type-options: nosniff
+x-aspnet-version: 4.0.30319
+expires: -1
+server: Microsoft-IIS/7.5
+pragma: no-cache
+cache-control: no-cache
+date: Wed, 21 Jun 2017 02:16:37 GMT
+x-frame-options: SAMEORIGIN
+x-powered-by: ASP.NET
+content-type: application/json; charset=utf-8
+
+{"resultCode":"1000","message":"","data":[{"RECORD_ID":"2ab380d2-73de-413d-bbef-2b3f9a6e3709","PATIENT_ID":"8ee5daa6-ba26-4d17-83b3-eda99ea443ad","CODE":"201706050926280747","ADDRESS":"","HISTORY_PROVIDER":"","CONTACT":"","CONTACT_NUMBER":"","REASON_TYPE":"","CONDITION_GRADE":"-1","COORDINATE_DEGREE":"0","DISEASE_CATEGORY":"-1","DISEASE_CATEGORY_OTHER":"","SENT_LOCATION_TYPE":"","TREATMENT_RESULT":"","OTHRE_TREATMENT":"","CHIEF_COMPLAINT":"","PRESENT_ILLNESS":"","PAST_HISTORY":"","ALLERGIC_HISTORY":"","DIAGNOSIS":"","CREATE_TIME":"2017-06-05T09:26:30","CREATE_BY":"pad","UPDATE_TIME":"2017-06-08T14:03:48","UPDATE_BY":"admin","STATUS":1.0,"TO_HOSPIAL":"1","TO_DEPT":"","TO_DOCTOR":"","FROM_HOSPITAL":"","FROM_DEPT":"","FROM_DOCTOR":"","CUSTODY_START_TIME":null,"MEDICATION_TIME":null,"SCENE_DIAGNOSIS_TIME":null,"SCENE_ASSESSMENT_TIME":null,"FIRST_ECG_TIME":null,"ECG_DIAGNOISE":null,"ARRIVED_RESCUE_TIME":null,"LEFT_RESCUE_TIME":null,"MPDS":"","DOCTOR_NAME":"","NURSE_NAME":"","DRIVER_NAME":"","MEDICAL_HIS_PRO_TYPE":"","RESCUE_CHANGE_RESULT":"","RESCUE_DEAD_SCENE":-1.0,"SCENE":"","IS_SPECIAL_RECORD":0.0,"SPECIAL_MEMO":"","PLAN_TO_HOS_TIME":null,"ARCHIVE_STATUS":0.0,"IS_NOTIFY_EMERGENCY":1.0}],"IsSuccess":true}
